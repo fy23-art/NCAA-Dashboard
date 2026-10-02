@@ -1,0 +1,19 @@
+{
+  "family": "ncaa-soccer-analytics",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {"name": "go-api", "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/ncaa-go-api:latest",
+     "portMappings": [{"containerPort": 8080}], "essential": true,
+     "environment": [{"name": "REDIS_URL", "value": "redis://<ELASTICACHE_ENDPOINT>:6379/0"}],
+     "secrets": [{"name": "DATABASE_URL", "valueFrom": "arn:aws:secretsmanager:<REGION>:<ACCOUNT_ID>:secret:ncaa/database-url"}],
+     "healthCheck": {"command": ["CMD-SHELL", "wget -qO- localhost:8080/health || exit 1"], "interval": 30, "retries": 3}},
+    {"name": "flask-api", "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/ncaa-flask-api:latest",
+     "portMappings": [{"containerPort": 8000}], "essential": true,
+     "environment": [{"name": "REDIS_URL", "value": "redis://<ELASTICACHE_ENDPOINT>:6379/0"}],
+     "secrets": [{"name": "DATABASE_URL", "valueFrom": "arn:aws:secretsmanager:<REGION>:<ACCOUNT_ID>:secret:ncaa/database-url"}]}
+  ]
+}

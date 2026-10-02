@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rice Owls W. Soccer: Home vs Away</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff;--fg:#14213d;--mut:#667085;--card:#f4f6fa;--acc:#00205b;--w:#1a7f4b;--d:#b7791f;--l:#c0392b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1424;--fg:#e8ecf5;--mut:#9aa6c0;--card:#18213a;--acc:#7fa4ff;--w:#4cc38a;--d:#e0b04a;--l:#f08070}}
+:root[data-theme="dark"]{--bg:#0e1424;--fg:#e8ecf5;--mut:#9aa6c0;--card:#18213a;--acc:#7fa4ff;--w:#4cc38a;--d:#e0b04a;--l:#f08070}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.5rem;margin:0 0 4px;color:var(--acc)}h2{font-size:1.05rem;margin:28px 0 10px}
+.sub{color:var(--mut);margin:0 0 16px;font-size:.9rem}
+.tabs{display:flex;gap:8px;margin:12px 0}
+button{border:1px solid var(--acc);background:transparent;color:var(--acc);padding:6px 14px;border-radius:999px;font:inherit;cursor:pointer}
+button.on{background:var(--acc);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.k{background:var(--card);border-radius:10px;padding:10px 12px}.k b{display:block;font-size:1.4rem}.k span{color:var(--mut);font-size:.78rem}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--card);font-size:.88rem}th{color:var(--mut);font-weight:600}
+.W{color:var(--w)}.D{color:var(--d)}.L{color:var(--l)}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:.85rem}.bar i{display:block;height:10px;border-radius:5px;background:var(--acc)}.bar em{min-width:150px;font-style:normal}
+.note{background:var(--card);border-left:4px solid var(--d);padding:10px 12px;border-radius:6px;font-size:.84rem;margin-top:24px}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.8s ease forwards;filter:drop-shadow(0 0 5px var(--acc))}@keyframes dr{to{stroke-dashoffset:0}}
+.row{display:flex;gap:8px;align-items:center;margin:4px 0;font-size:.78rem}.row span{width:112px;flex:none}
+.trk{position:relative;height:24px;flex:1;background:var(--card);border-radius:6px}.trk:before,.trk:after{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--mut);opacity:.4}.trk:before{left:42.86%}.trk:after{left:85.7%}
+.trk b{position:absolute;top:2px;bottom:2px;border-radius:4px;color:#fff;font:600 .65rem/20px system-ui;text-align:center;overflow:hidden}
+.leg{font-size:.75rem;color:var(--mut);margin-top:8px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 4px 0 10px}
+.pitch{position:relative;aspect-ratio:3/4;max-width:400px;margin:10px auto;border-radius:10px;border:2px solid #ffffff88;background:repeating-linear-gradient(#2f8f4e 0 12.5%,#35a058 12.5% 25%)}
+.pitch .hl{position:absolute;left:0;right:0;top:50%;border-top:2px solid #ffffff88}.pitch .cc{position:absolute;left:35%;top:38%;width:30%;height:24%;border:2px solid #ffffff88;border-radius:50%}
+.dot{position:absolute;left:50%;top:50%;width:30px;height:30px;border-radius:50%;background:#0b2a6b;color:#fff;border:2px solid #fff;display:grid;place-items:center;font:700 .75rem system-ui;transform:translate(-50%,-50%);transition:left 1s cubic-bezier(.5,0,.2,1),top 1s cubic-bezier(.5,0,.2,1),opacity .5s,transform .5s}
+.dot small{position:absolute;top:30px;font:600 .62rem system-ui;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.draw{animation:none;stroke-dashoffset:0}.dot{transition:none}}
+</style></head><body><main>
+<h1>Rice Owls Women's Soccer: Home vs Away</h1>
+<p class="sub" id="src"></p><div class="tabs" id="ytabs"></div>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="kpi"></div>
+<h2>Match log</h2><div class="wrap"><table id="log"></table></div>
+<h2>Goals for vs against by venue</h2><div id="bars"></div>
+<h2>Insights</h2><ul id="ins"></ul>
+<h2>Formations (2024 season, Rice goals-opp goals)</h2><div id="form"></div>
+<h2>Top finishers (2024 season totals)</h2><div class="wrap"><table id="pl"></table></div>
+<h2>Season momentum</h2>
+<div class="tabs" id="mtabs"></div><div id="mom"></div>
+<p class="sub">Circle = home, square = away; color = result. Hover a marker for the score.</p>
+<h2>Tactical shape timeline (2024, Wyscout)</h2><div class="wrap"><div id="shape" style="min-width:520px"></div></div>
+<p class="sub">Minutes 0 to 105 per match; vertical lines mark 45' and 90'. Rice changed shape most often away from home and in the final 20 minutes.</p>
+<h2>Positional change: watch the shape morph (2024, Wyscout)</h2>
+<div class="tabs" id="ftabs"></div><div class="pitch" id="pitch"></div><p class="sub" id="fst" style="text-align:center"></p>
+<h2>Player fingerprints (2024, Wyscout)</h2>
+<div class="tabs" id="rchips"></div><div id="radar" style="text-align:center"></div>
+<p class="sub">Per-90 rates, scaled to the best of these five; small minute samples (Quarterman 358') inflate per-90 numbers.</p>
+<div class="note"><b>Data notes.</b> Momentum is match-to-match (the report has no minute-by-minute events); shape-timeline gaps are minutes with no listed formation. Home/away is inferred from listing order in the report (home team listed first); neutral sites aren't labelled. Per-match xG and shots are not in the report, so venue splits use results only. 2024 has Wyscout player and formation data; 2025 and 2026 are match results only. 2025 excludes conference-tournament games (scores or venues unconfirmed); 2026 omits matches without a confirmed score.</div>
+</main>
+<script>
+const MK=r=>r;
+const R25=[["HCU","2025-08-14","H",2,1],["UTRGV","2025-08-17","A",6,0],["North Carolina","2025-08-24","A",0,4],["Oklahoma State","2025-08-28","H",3,2],["Louisiana","2025-08-31","A",2,1],["Lamar","2025-09-07","A",2,0],["UAB","2025-09-11","A",3,3],["FAU","2025-09-18","H",2,1],["Grambling","2025-09-21","H",3,1],["Temple","2025-09-25","A",1,0],["Memphis","2025-09-28","H",0,2],["UTSA","2025-10-02","H",1,1],["Charlotte","2025-10-09","A",1,1],["South Florida","2025-10-12","H",3,1],["North Texas","2025-10-19","A",2,2],["ECU","2025-10-23","H",1,1],["Tulsa","2025-10-30","A",0,4]],R26=[["Texas A&M","2026-08-12","H",1,2],["Navy","2026-08-15","A",3,0],["HCU","2026-08-20","A",1,1],["Lamar","2026-08-23","H",1,1],["Vanderbilt","2026-08-27","H",1,3],["Temple","2026-09-24","H",5,1],["Tulsa","2026-09-27","H",0,3]];
+const D={2024:MK(R24),2025:MK(R25),2026:MK(R26)};let yr=2025,M=D[2025];
+const R24=[["UAB","2024-09-27","H",2,1],["UTSA","2024-09-29","A",1,0],["Temple","2024-10-04","H",4,0],["North Texas","2024-10-13","H",2,1],["FAU","2024-10-18","A",0,0],["Memphis","2024-10-25","A",1,4],["Charlotte","2024-10-27","H",0,1],["ECU","2024-11-01","A",1,2],["UAB","2024-11-04","H",2,0],["Memphis","2024-11-08","A",1,3]].map(([o,d,v,f,a])=>({o,d,v,f,a,r:f>a?"W":f<a?"L":"D"}));
+const F=[["3-5-2","47%",8,5],["4-1-4-1","16%",3,1],["3-4-1-2","14%",2,1],["4-2-3-1","12%",1,4]];
+const P=[["L. Chancey",859,21,1.82,3],["C. Albuquerque",773,9,1.15,2],["T. Rish",523,10,1.12,2],["J. Johnston",363,11,1.36,1],["K. McKinney",580,10,1.22,1],["A. Love",643,12,1.58,0],["N. Gorji",462,4,.77,1],["S. Zhang",451,6,.74,1]];
+let v="ALL";const $=id=>document.getElementById(id);
+function s(l){const w=l.filter(x=>x.r=="W").length,d=l.filter(x=>x.r=="D").length,f=l.reduce((a,x)=>a+x.f,0),a=l.reduce((t,x)=>t+x.a,0),n=l.length||1;return{n:l.length,w,d,l:l.length-w-d,f,a,pts:3*w+d,ppg:(3*w+d)/n,gf:f/n,ga:a/n,cs:l.filter(x=>!x.a).length}}
+function insights(H,A){const f=x=>`${x.w}-${x.d}-${x.l}`,o=[`Home: ${f(H)} (${H.ppg.toFixed(2)} PPG), ${H.f} scored, ${H.a} conceded in ${H.n} matches.`,`Away: ${f(A)} (${A.ppg.toFixed(2)} PPG), ${A.f} scored, ${A.a} conceded in ${A.n} matches.`];
+if(H.n&&A.n){const d=H.ppg-A.ppg;o.push(Math.abs(d)<.3?`Home and away points per game are close (gap ${Math.abs(d).toFixed(2)}).`:`Rice earned ${Math.abs(d).toFixed(2)} more points per game ${d>0?"at home":"away"}.`);o.push(`Goals per game, home vs away: ${H.gf.toFixed(2)} for / ${H.ga.toFixed(2)} against vs ${A.gf.toFixed(2)} for / ${A.ga.toFixed(2)} against.`)}
+const b=M.reduce((q,x)=>Math.abs(x.f-x.a)>Math.abs(q.f-q.a)?x:q,M[0]);o.push(`Biggest margin: ${b.f}-${b.a} vs ${b.o} (${b.v=="H"?"home":"away"}).`);
+o.push(yr==2024?"Context: two of five away games were at Memphis, so opponent strength explains part of the gap.":yr==2026?"2026 is in progress; only matches with confirmed scores are shown (about 4 others lack a score).":"Regular season only; conference tournament games are excluded.");return o}
+function render(){const SRC={2024:"2024 · 10 matches · Wyscout team report",2025:"2025 regular season · 17 matches · American Conference results",2026:"2026 to date · 7 matches with confirmed scores · Rice Athletics"};$("src").textContent="NCAA D1 American Athletic · "+SRC[yr];$("ytabs").innerHTML=[2024,2025,2026].map(k=>`<button class="${k==yr?"on":""}" onclick="yr=${k};M=D[${k}];render();momentum()">${k}</button>`).join("");const L=M.filter(x=>v=="ALL"||x.v==v),t=s(L);
+$("tabs").innerHTML=["ALL","H","A"].map(k=>`<button class="${k==v?"on":""}" onclick="v='${k}';render()">${{ALL:"All",H:"Home",A:"Away"}[k]}</button>`).join("");
+$("kpi").innerHTML=[["Record",`${t.w}-${t.d}-${t.l}`],["Points/game",t.ppg.toFixed(2)],["Goals for/g",t.gf.toFixed(2)],["Goals against/g",t.ga.toFixed(2)],["Clean sheets",t.cs]].map(([a,b])=>`<div class="k"><b>${b}</b><span>${a}</span></div>`).join("");
+$("log").innerHTML="<tr><th>Date</th><th>Venue</th><th>Opponent</th><th>Score</th><th></th></tr>"+L.map(x=>`<tr><td>${x.d}</td><td>${x.v=="H"?"Home":"Away"}</td><td>${x.o}</td><td>${x.f}-${x.a}</td><td class="${x.r}"><b>${x.r}</b></td></tr>`).join("");
+const H=s(M.filter(x=>x.v=="H")),A=s(M.filter(x=>x.v=="A")),mx=Math.max(H.gf,H.ga,A.gf,A.ga);
+$("bars").innerHTML=[["Home GF/g",H.gf],["Home GA/g",H.ga],["Away GF/g",A.gf],["Away GA/g",A.ga]].map(([l,x])=>`<div class="bar"><em>${l}: ${x.toFixed(2)}</em><i style="width:${x/mx*55}%"></i></div>`).join("");
+$("ins").innerHTML=insights(H,A).map(x=>`<li>${x}</li>`).join("");
+$("form").innerHTML=F.map(([f,u,g,c])=>`<div class="bar"><em>${f} (${u} of time)</em>${g}-${c}</div>`).join("");
+$("pl").innerHTML="<tr><th>Player</th><th>Min</th><th>Shots</th><th>xG</th><th>Goals</th></tr>"+P.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}
+let mm="gd";
+function momentum(){const w=640,h=230,p=34;let pts=0,gd=0;const pt=x=>x.r=="W"?3:x.r=="D"?1:0;
+const v=M.map((m,i)=>{gd+=m.f-m.a;pts+=pt(m);const l=M.slice(Math.max(0,i-2),i+1);return mm=="gd"?gd:mm=="pts"?pts:l.reduce((t,x)=>t+pt(x),0)/l.length});
+const lo=Math.min(0,...v),hi=Math.max(...v),X=i=>p+i*(w-2*p)/(M.length-1||1),Y=y=>h-p-(y-lo)/((hi-lo)||1)*(h-2*p);
+const d=v.map((y,i)=>(i?"L":"M")+X(i)+","+Y(y)).join("");
+$("mtabs").innerHTML=[["gd","Cumulative goal difference"],["pts","Cumulative points"],["form","3-match form (PPG)"]].map(([k,l])=>`<button class="${k==mm?"on":""}" onclick="mm='${k}';momentum()">${l}</button>`).join("");
+$("mom").innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%"><path d="${d}L${X(M.length-1)},${Y(lo)}L${X(0)},${Y(lo)}Z" fill="var(--acc)" fill-opacity=".12"/><line x1="${p}" x2="${w-p}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--mut)" stroke-dasharray="4"/><path class="draw" pathLength="1" d="${d}" fill="none" stroke="var(--acc)" stroke-width="3" stroke-linejoin="round"/>`+v.map((y,i)=>{const m=M[i],c=`var(--${m.r.toLowerCase()})`,x=X(i),yy=Y(y);return (m.v=="H"?`<circle cx="${x}" cy="${yy}" r="6.5" fill="${c}"/>`:`<rect x="${x-6}" y="${yy-6}" width="12" height="12" fill="${c}"/>`).replace("/>",`><title>${m.o} ${m.f}-${m.a} (${m.v=="H"?"home":"away"}): ${(+y).toFixed(2)}</title>`).replace(/<(circle|rect)([^>]*)><title>(.*)<\/title>/,"<$1$2><title>$3</title></$1>")+`<text x="${x}" y="${h-10}" font-size="9" text-anchor="middle" fill="var(--mut)">${m.o.slice(0,5)}</text>`}).join("")+`</svg>`}
+const S=[["UAB (H) W",[["3-5-2",1,62],["4-2-3-1",84,96]]],["UTSA (A) W",[["3-5-2",1,42],["4-4-2",68,76],["4-4-2",99,103]]],["Temple (H) W",[["3-5-2",1,61],["3-5-2",63,78]]],["N. Texas (H) W",[["3-4-1-2",1,18],["5-3-2",39,46],["4-1-4-1",46,59],["4-1-4-1",87,98]]],["FAU (A) D",[["3-4-1-2",1,24],["3-5-2",24,38],["4-1-4-1",46,63],["4-1-4-1",82,98]]],["Memphis (A) L",[["4-2-3-1",1,44],["4-2-3-1",93,102]]],["Charlotte (H) L",[["3-5-2",1,17],["3-5-2",46,56],["3-5-2",58,70],["3-5-2",79,95]]],["ECU (A) L",[["4-1-3-2",1,29],["4-1-4-1",46,59],["4-1-4-1",94,100]]],["UAB (H) W",[["3-4-1-2",1,29],["4-5-1",80,98]]],["Memphis (A) L",[["3-5-2",1,29],["3-5-2",46,69],["3-5-2",88,99]]]];
+const C={"3-5-2":"#3b6fd8","3-4-1-2":"#14a39a","4-1-4-1":"#c98a1f","4-2-3-1":"#d45a8a","4-4-2":"#8e63c9","4-5-1":"#7b8794","5-3-2":"#c0543a","4-1-3-2":"#4f9a2a"};
+function shape(){$("shape").innerHTML=S.map(([n,g])=>`<div class="row"><span>${n}</span><div class="trk">${g.map(([f,a,b])=>`<b title="${f} ${a}'-${b}'" style="left:${a/1.05}%;width:${(b-a)/1.05}%;background:${C[f]}">${b-a>14?f:""}</b>`).join("")}</div></div>`).join("")+`<div class="leg">${Object.entries(C).map(([f,c])=>`<i style="background:${c}"></i>${f}`).join("")}</div>`}
+const NM={0:"Hutchins",29:"Reuscher",4:"Lazor",14:"Furuto",7:"Albuquerque",12:"Gorji",28:"Bruckner",23:"Chancey",33:"Quarterman",32:"Love",25:"Johnston",9:"Zhang",27:"McKinney",20:"Martz",26:"Rish"};
+const FM={"3-5-2":{u:"47%",s:"goals 8-5 · xG 6.5-3.8 · possession 44% · PPDA 6.8",p:{0:[50,90],29:[22,76],4:[50,78],14:[78,76],12:[10,48],23:[34,52],28:[50,62],7:[66,52],33:[90,48],32:[40,16],25:[60,18]}},
+"4-1-4-1":{u:"16%",s:"goals 3-1 · xG 2.5-2.0 · possession 51% · PPDA 4.1 (hardest press)",p:{0:[50,90],29:[15,74],4:[38,78],7:[62,78],14:[85,74],28:[50,60],9:[14,44],23:[38,46],27:[62,46],33:[86,44],26:[50,16]}},
+"3-4-1-2":{u:"14%",s:"goals 2-1 · xG 2.0-1.9 · possession 48% · PPDA 6.9",p:{0:[50,90],29:[22,76],4:[50,78],14:[78,76],12:[10,50],7:[38,54],28:[62,54],20:[90,50],23:[50,34],9:[38,16],26:[62,16]}},
+"4-2-3-1":{u:"12%",s:"goals 1-4 · xG 0.5-3.2 · possession 40% · PPDA 7.1 (struggled)",p:{0:[50,90],29:[15,74],4:[38,78],7:[62,78],14:[85,74],28:[38,58],32:[62,58],12:[18,36],23:[50,36],33:[82,36],25:[50,14]}}};
+let cf="3-5-2",timer=null;
+function morphInit(){$("pitch").innerHTML=`<i class="hl"></i><i class="cc"></i>`+Object.keys(NM).map(n=>`<div class="dot" id="d${n}">${n}<small>${NM[n]}</small></div>`).join("");
+$("ftabs").innerHTML=Object.keys(FM).map(f=>`<button id="b${f}" onclick="setF('${f}',1)">${f}</button>`).join("")+`<button id="play" onclick="play()">▶ Auto</button>`;setF(cf)}
+function setF(f,man){cf=f;if(man)stop();const F=FM[f];for(const n in NM){const e=$("d"+n),q=F.p[n];if(q){e.style.left=q[0]+"%";e.style.top=q[1]+"%";e.style.opacity=1;e.style.transform="translate(-50%,-50%) scale(1)"}else{e.style.opacity=0;e.style.transform="translate(-50%,-50%) scale(.3)"}}
+Object.keys(FM).forEach(k=>$("b"+k).classList.toggle("on",k==f));$("fst").textContent=`${f} · ${F.u} of minutes · ${F.s}`}
+function play(){if(timer)return stop();const ks=Object.keys(FM);timer=setInterval(()=>setF(ks[(ks.indexOf(cf)+1)%ks.length]),2600);$("play").textContent="⏸ Pause"}
+function stop(){clearInterval(timer);timer=null;$("play").textContent="▶ Auto"}
+const RP=[["Chancey",859,1.82,21,7,9,30,42],["Rish",523,1.12,10,6,11,13,43],["Quarterman",358,.16,3,7,13,16,48],["Albuquerque",773,1.15,9,2,7,34,56],["Zhang",451,.74,6,2,19,15,42]];
+const RC=["#3b6fd8","#d45a8a","#c98a1f","#14a39a","#8e63c9"],AX=["xG/90","Shots/90","Key passes/90","Dribbles won/90","Prog. passes/90","Duel win %"];
+let sel=new Set([0,2]);
+function radar(){const m=RP.map(r=>[2,3,4,5,6].map(i=>r[i]*90/r[1]).concat(r[7])),mx=AX.map((_,k)=>Math.max(...m.map(a=>a[k])));
+const pt=(k,f)=>{const a=-Math.PI/2+k*Math.PI/3;return[160+Math.cos(a)*105*f,150+Math.sin(a)*105*f]};
+let g=[.25,.5,.75,1].map(f=>`<polygon points="${AX.map((_,k)=>pt(k,f).join(",")).join(" ")}" fill="none" stroke="var(--mut)" stroke-opacity=".35"/>`).join("");
+g+=AX.map((a,k)=>{const[x,y]=pt(k,1.18),[x2,y2]=pt(k,1);return `<line x1="160" y1="150" x2="${x2}" y2="${y2}" stroke="var(--mut)" stroke-opacity=".3"/><text x="${x}" y="${y}" font-size="10" text-anchor="middle" fill="var(--mut)">${a}</text>`}).join("");
+g+=[...sel].map(i=>`<polygon points="${m[i].map((v,k)=>pt(k,v/mx[k]).join(",")).join(" ")}" fill="${RC[i]}" fill-opacity=".25" stroke="${RC[i]}" stroke-width="2"/>`).join("");
+$("radar").innerHTML=`<svg viewBox="0 0 320 300" style="max-width:360px;width:100%">${g}</svg>`;
+$("rchips").innerHTML=RP.map((r,i)=>`<button class="${sel.has(i)?"on":""}" style="border-color:${RC[i]}" onclick="sel.has(${i})?sel.delete(${i}):sel.add(${i});radar()">${r[0]}</button>`).join("")}
+render();momentum();shape();morphInit();radar();
+</script></body></html>

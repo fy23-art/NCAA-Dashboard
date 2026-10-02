@@ -1,0 +1,4 @@
+body{font-family:system-ui,sans-serif;margin:0;color:#14213d}main{max-width:760px;margin:auto;padding:16px}
+nav button{margin-right:8px;padding:6px 14px;border-radius:999px;border:1px solid #00205b;background:#fff;cursor:pointer}
+nav button[aria-pressed=true]{background:#00205b;color:#fff}.cards{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.card{background:#f4f6fa;border-radius:10px;padding:12px 16px;min-width:160px}.card b{font-size:1.6rem;display:block}svg{width:100%;color:#00205b}
